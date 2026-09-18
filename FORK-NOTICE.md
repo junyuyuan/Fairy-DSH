@@ -24,6 +24,7 @@ Base commit: `d639887` ("Fix GitHub Actions pnpm cache paths").
 | --- | --- |
 | `src/index.js` | Dropped the removed `settingsNamespace()` import from `@deepseek-ai/dsh-settings`; the host now registers plain namespace strings, which the package validates itself. Without this the host entry threw `SyntaxError: does not provide an export named 'settingsNamespace'` and the plugin could not load. |
 | `src/client/index.js` | Content-fade mask now targets the `[data-chat-flow]` transcript surface instead of `[data-conversation-scroll]`, which also contains the composer seat. Masking the composer punched the input text out through the radial gradient (reported as "input text invisible in dark theme"). The scroll container is kept as a fallback. |
+| `src/client/style.js` | Restores interaction, stacking and on-screen placement for the question, approval and plan-review popups, which render inside `conversation.composer` and therefore inherited the dock's `pointer-events:none` and `z-index:1`, and were pushed off-screen by the dock's off-viewport bottom edge. |
 | `package.json` | Dependencies retargeted to `@deepseek-ai/dsh-settings@^0.1.5-rc.2` and `@deepseek-ai/schemastery@^3.18.2`; `tsdown` pinned to `0.22.14`. Added a `build` alias script. |
 | `scripts/sync-build.mjs` | Replaces the POSIX `cp`/`mv` artifact chain in the `bundle` script, which fails on Windows (`'cp' is not recognized`). |
 | `test/contract.test.js` | Read helper normalizes CRLF to LF so newline-sensitive source assertions hold on Windows. Assertions updated for the two source changes above. |
@@ -35,7 +36,8 @@ Base commit: `d639887` ("Fix GitHub Actions pnpm cache paths").
 - Upstream issue #1 — host `settingsNamespace` import failure and the unavailable
   model selector caused by it.
 - Upstream issue #2 — item 4, "input text invisible in dark theme" (upstream
-  reported it as not located; the mask surface above is the cause).
+  reported it as not located; the mask surface above is the cause), and item 3,
+  the clipped, click-through question/approval popups.
 - Upstream issue #3 — Windows test failures from missing build scripts, an
   undeclared dependency, and a `D:\D:\...` path concatenation.
 
