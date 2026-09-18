@@ -6,7 +6,7 @@ import {
 } from 'dsh-fairy-contracts';
 import { createFairyDiagnostics } from 'dsh-fairy-contracts/diagnostics';
 
-// dsh-settings >= 0.1.2 removed the `settingsNamespace()` wrapper: the host now
+// dsh-settings >= 0.1.2 removed the namespace-factory wrapper: the host now
 // registers a namespace by passing its string name straight to
 // `settings.register()`, which validates it against /^[a-z][a-z0-9-]*$/. The
 // contract constants are already plain strings ('fairy-visual',
