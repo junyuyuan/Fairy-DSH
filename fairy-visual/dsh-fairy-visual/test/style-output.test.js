@@ -16,8 +16,8 @@ test('emits the approved scoped CSS byte sequence', () => {
   try {
     injectStyles();
     const [style] = nodes.values();
-    assert.equal(Buffer.byteLength(style.textContent), 134951);
-    assert.equal(createHash('sha256').update(style.textContent).digest('hex'), '405695512d230aad2415353fc24540c14f11961be6ead14d51078310c73e563f');
+    assert.equal(Buffer.byteLength(style.textContent), 135456);
+    assert.equal(createHash('sha256').update(style.textContent).digest('hex'), '61ff87873bdaadd5b53496bf733b926c5e500723595c474a767047fcd5b43da6');
     injectStyles();
     assert.equal(nodes.size, 1);
   } finally {
@@ -52,6 +52,13 @@ test('restores interaction and on-screen placement for the composer-slot popups'
     // Placement: keep the card inside the viewport instead of letting the dock's
     // off-screen bottom edge push it out.
     assert.match(textContent, /\[data-question-key\][^{]*\{[^}]*max-height:min\(70vh,calc\(100dvh - 180px\)\)!important/);
+    // Contrast: the official "recommended" badge pairs --dsw-alias-button-info-fill
+    // over --dsw-specific-sidebar-nav-item-active-accent. The HDD theme redefines that
+    // sidebar accent to a blue of nearly identical luminance to the stock info fill,
+    // collapsing the ratio to ~1.01 and hiding the label. The popup scope must rebind
+    // the accent and force a white label.
+    assert.match(textContent, /\[data-question-key\][^{]*\{[^}]*--dsw-specific-sidebar-nav-item-active-accent:#14304d!important/);
+    assert.match(textContent, /\[class\*="_badge"\]\{background:var\(--dsw-specific-sidebar-nav-item-active-accent\)!important;color:#fff!important\}/);
   } finally {
     globalThis.document = originalDocument;
   }

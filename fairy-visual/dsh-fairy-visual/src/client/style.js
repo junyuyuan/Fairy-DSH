@@ -284,6 +284,15 @@ html[data-dsh-fairy-visual],html[data-dsh-fairy-visual] body{color-scheme:dark}h
   // and an on-screen position for these three surfaces only, anchored to the
   // viewport so the centred card stays fully visible whatever the dock does.
   appendSection('composer', `html[data-dsh-fairy-visual] [data-question-key],html[data-dsh-fairy-visual] [data-approval-key],html[data-dsh-fairy-visual] [data-plan-review-key]{position:fixed!important;left:50%!important;right:auto!important;bottom:calc(var(--dsh-fairy-composer-dock-height,132px) + 12px)!important;top:auto!important;transform:translateX(-50%)!important;width:min(640px,calc(100vw - 32px))!important;min-width:0!important;max-width:calc(100vw - 32px)!important;max-height:min(70vh,calc(100dvh - 180px))!important;overflow-y:auto!important;overflow-x:hidden!important;z-index:60!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important}html[data-dsh-fairy-visual] [data-question-key] *,html[data-dsh-fairy-visual] [data-approval-key] *,html[data-dsh-fairy-visual] [data-plan-review-key] *{pointer-events:auto!important}html[data-dsh-fairy-visual] [data-question-scroll],html[data-dsh-fairy-visual] [data-approval-scroll],html[data-dsh-fairy-visual] [data-plan-review-scroll]{min-height:0!important;overflow-y:auto!important}`);
+  // The official "recommended" badge paints its label with
+  // var(--dsw-alias-button-info-fill) over var(--dsw-specific-sidebar-nav-item-active-accent).
+  // The HDD theme redefines that sidebar accent to #267fc4 -- luminance .196 -- while
+  // leaving the info fill at the stock light blue #4176e6 -- luminance .198. The two
+  // collapse to a contrast ratio of ~1.01, so the badge text disappears entirely.
+  // Rebinding the accent *inside the popups only* restores a stock dark-blue badge fill
+  // without touching the sidebar, which shares the token; the label goes white because
+  // at 11px the info-fill blue would still only reach ~3.2:1.
+  appendSection('composer', `html[data-dsh-fairy-visual] [data-question-key],html[data-dsh-fairy-visual] [data-approval-key],html[data-dsh-fairy-visual] [data-plan-review-key]{--dsw-specific-sidebar-nav-item-active-accent:#14304d!important}html[data-dsh-fairy-visual] [data-question-key] [class*="_badge"],html[data-dsh-fairy-visual] [data-approval-key] [class*="_badge"],html[data-dsh-fairy-visual] [data-plan-review-key] [class*="_badge"]{background:var(--dsw-specific-sidebar-nav-item-active-accent)!important;color:#fff!important}`);
   el.textContent = cssSections.map(({ css }) => css).join('');
 
   (document.head || document.documentElement).appendChild(el);
