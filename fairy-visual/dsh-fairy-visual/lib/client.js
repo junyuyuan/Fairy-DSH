@@ -7331,7 +7331,7 @@ html[data-dsh-fairy-visual][data-dsh-fairy-theme="light"] [data-dsh-fairy-mascot
 				const asFadePercent = (ratio) => Math.round(ratio * 1e3) / 10 + "%";
 				const applyContentFade = () => {
 					const eye = stageNode.querySelector("#dsh-fairy-root");
-					const nextSurface = conversationScroll(conversation(document));
+					const nextSurface = chatFlows(document)[0] || conversationScroll(conversation(document));
 					if (!visibleRef.current) return clearContentFade(true);
 					if (!eye || !nextSurface) return clearContentFade();
 					if (!chatFlows(document).some((flow) => {
